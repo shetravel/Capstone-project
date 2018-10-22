@@ -1,0 +1,401 @@
+---
+title: "Capstone Project"
+author: "Sheila Lynch"
+date: "October 21, 2018"
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(plotly)
+library(gridExtra)
+load(file="athlete_events.RData")
+load(file="athlete_event_whole.RData")
+load(file="Compare_Row_Equest_all.RData")
+load(file="Athlete_Top_Teams.Rdata")
+load(file ="meanfun.Rdata")
+load(file="Train_Equ.RData")
+load(file="Test_Row.RData")
+load(file="EquMatrix.RData")
+load(file="EquVector.Rdata")
+load(file="clusterathlete.Rdata")
+
+```
+
+## An introduction to the problem (based on your earlier Capstone submissions) 
+
+As I watch the Olympics this past year and listening the the athlete's stories, most are young adults competing in the variety of sports.  It raised the question, how many athletes are over 30 years old.  And how many of those over 30 years old earn a medal. And while this information is good for trivia answers, I am validating as manufactures of these sports focus on specific age groups to market product and is there a market for athletes over 30.  
+
+##A deeper dive
+Once I found a dataset with Olympic data from 1900 - 2016, detailing all Sports and Teams.  
+
+```{r}
+str(Athlete_event_whole)
+```
+
+
+
+
+
+In order to clean the data, I needed to check the structure and determine if any critical colunms had NA data.  I found both Age and Medal columns did include NA or blanks.  I first fixed the Medal missing data which consisted of Gold, Silver, Bronze and I filled in the blanks with "No medal earn".  
+ -Clean up Medal fields with NA
+
+ Top_6_Teams <- mutate(athlete_events, Medal = ifelse(is.na(Medal), "No Medal earned", Medal))
+Secondly to correct the NA in Age, I considered removing those with NA, but as I looked at the age data, I thought filling those in with the mean age avoided losing data rows.
+Top_6_Teams <- mutate(Top_6_Teams, Age = ifelse(is.na(Age), mean(Age,na.rm = TRUE), Age))
+
+Next, as countries have divided over the years or come back together, I looked a the top 7 teams by participation and combined West Germany, East Germany and Germany as one team as well as took USSR and Russia data to combine in one team.  I realize a few other countries have split off of USSR, but for data volume, it was not impactful.
+
+Clean up major country changes of German and Russia to combine
+
+Top_6_Teams <- mutate(Top_6_Teams, Team = ifelse(Team == "Soviet Union", "Russia", Team))
+Top_6_Teams <- mutate(Top_6_Teams, Team = ifelse(Team == "East Germany", "Germany", Team))
+Top_6_Teams <- mutate(Top_6_Teams, Team = ifelse(Team == "West Germany", "Germany", Team))
+
+A few other steps of cleaning the data was to create a column to reflect if athlete was under 30(No) or over 30(Yes).  This provided better table reviews than true / false - in preference.
+- create new column to simplify those over / under 30
+
+Top_7_Team$Age_over_30 <- ifelse(Top_7_Team$Age >= 30,'Yes','No')
+
+
+And I also created a column to assign a value to the medals earned.  While I honestly have not finalized if I just compare the change in age based on medals, I wanted this field to explore possibly weighting the level of medal.  So that is why I gave Gold 3, Silver 2, Bronze 1 as there is consideration of giving more credit to gold medals earned than bronze.
+#
+ -build value to medal
+
+Top_7_Team$Medal_value <- ifelse(Top_7_Team$Medal == "Gold", 3, ifelse(Top_7_Team$Medal == "Silver", 2,
+ + ifelse(Top_7_Team$Medal == "Bronze", 1,0)))
+
+All of this seemed necessary to move forward, but as I did start to plot and run more results I found having the dataset so split up was just causing more work so I started again and focused mainly on the one clean data set only creating two sub data sets until it was time to split out the train and test sets.  
+
+I began to run some results to give the percentages of highest proportion establishing the baseline for all athlete events.  As seen Equestrianism is number 4 Sport in proportion of participants of with participants over 30.  And Monaco, Namibia and South Sudan have the highest proportion of participates over 30, however all are considered minimal in participation.  So considering the top 7 countries, Great Britian, France and Germany are around 19-20% of participants being over age 30.
+
+# Which events in your dataset have the highest proportion of participants aged over 30?
+```{r} 
+Athlete_event_whole %>%
+  group_by(Sport) %>%
+  summarise(
+    participants = n(),
+    over_30      = sum(Age > 30)
+  ) %>%
+  mutate(
+    percent_over_30 = over_30/participants*100
+  ) %>%
+  arrange(desc(percent_over_30))
+```
+#Which countries have the highest proportion of participants aged over 30? 
+```{r}
+Athlete_event_whole %>%
+  group_by(NOC) %>%
+  summarise(
+    participants = n(),
+    over_30      = sum(Age > 30)
+  ) %>%
+  mutate(
+    percent_over_30 = over_30/participants*100
+  ) %>%
+  arrange(desc(percent_over_30))
+```
+#The highest proportion of participants aged over 30 for top 7 countries
+```{r}
+Athlete_Top_Teams %>%
+  group_by(NOC) %>%
+  summarise(
+    participants = n(),
+    over_30      = sum(Age > 30)
+  ) %>%
+  mutate(
+    percent_over_30 = over_30/participants*100
+  ) %>%
+  arrange(desc(percent_over_30))
+
+```
+And considering the overall picture, I can see the highest proportion of athletes over 30 in all of the events/time have the top 5 being over 65 years ago.  And finally lets consider the proportion of the participants that earned medal over age 30 in the last 20 years, which in 2016 was 2.6% compared to 2008 it was 2.5%, not much change. It was 1920 that had the highest percentage of 11.7%.
+```{r}
+Athlete_event_whole %>%
+  group_by(Year) %>%
+  summarise(
+    participants = n(),
+    over_30      = sum(Age > 30)
+  ) %>%
+  mutate(
+    percent_over_30 = over_30/participants*100
+  ) %>%
+  arrange(desc(percent_over_30))
+```
+#Percentage of those over 30 over the years that earn a medal
+```{r}
+Athlete_event_whole %>%
+  group_by(Year,Medal_value) %>%
+  summarise(
+    participants = n(),
+    over_30      = sum(Age > 30)
+  ) %>%
+  mutate(
+    percent_over_30 = over_30/participants*100
+  ) %>%
+  arrange(desc(Year))
+```
+
+As I am considering Equestrian and Rowing, I can see that Equestrianism has a very high participation over age 30 at 61%, while Rowing is still just around 10.6%.  However my question is if the mean age is increasing for these sports.
+
+#The highest proportion of participants aged over 30 of both Rowing and Equestrian
+```{r}
+Compare_Row_Equest_all %>%
+  group_by(Sport) %>%
+  summarise(
+    participants = n(),
+    over_30      = sum(Age > 30)
+  ) %>%
+  mutate(
+    percent_over_30 = over_30/participants*100
+  ) %>%
+  arrange(desc(percent_over_30))
+```
+##Visual aids
+
+I ran some plots to see how the mean age has changed over time.
+This plot shows the mean age has slightly decreased for overall athlete events. 
+```{r, echo=FALSE}
+ggplot(Athlete_event_whole, aes(x=Year, y=Age)) +
+  geom_point(shape=1) +    # Use hollow circles
+  geom_smooth(method=lm)    # Add linear regression line 
+```
+
+This plot is reflecting the variance per total involved either over or under 30 years old.
+```{r}
+ggplot(Athlete_event_whole, aes(x = Year, fill = Age_over_30)) +
+  geom_bar(position = "dodge")
+```
+
+Then I started to think what possible articles have already been written on this topic.  So I went to Google and found 3 articles that help to  provide more direction.  
+
+The first article discusses Elite Athletes over 40 for the Pyeongchange Winter Olympics: <https://www.bloomberg.com/news/articles/2018-02-14/wisdom-and-drive-older-olympians-becoming-the-norm> .  The second article discusses is 30 the new 20 for Olympic Athletes: <https://venngage.com/blog/olympics/> .  Both of these articles discuss athletes that were successful and the latter article does analysis comparing Gymnastics to Track & Field.  This analysis combined with the third article I read <https://www.verywellfit.com/olympic-sports-youre-not-too-old-for-4075439> which discusses 10 Summer Olmpic Sports Your not too old to quality for.  As the 2020 Summer Olympic games are upcoming and the dataset data runs through 2016 Summer Olmpics, I thought I will select 2 of the sports on the list and compare if the average age is actually increasing.  Or if they have always been sports that have above typical Olympic athlete mean age.  I chose:
+
+##Rowing
+![alt text](https://timedotcom.files.wordpress.com/2016/06/olympics.jpg)
+
+
+##Equestrianism
+![alt text](http://images.nbcolympics.com/www.nbcolympics.com/field_image/19August2016/usatsi_9486292-1_0.jpg)
+
+Both sports have a long history in the Olmpics and moderate participation.  
+
+Let's start by looking at the proportion of particpants for Equestrianism.  Considering participation over the years, the top 3 are in the year 2000+.  And as I look at those over 30 earning medals, the result in 2016 was 9.9% compared to 2008 in which it was 12.1% and 12.5% in 2000 which shows while particpation of those over 30 has increased in Equestrianism, it has not reflected in earning a medal, however it is vastly higher than the results in overall events of 2.5% so participatin in Equestrianism does suggest a higher opportunity to win a medal for those participants over 30 years old.
+```{r}
+Train_Equ %>%
+  group_by(Year) %>%
+  summarise(
+    participants = n(),
+    over_30      = sum(Age > 30)
+  ) %>%
+  mutate(
+    percent_over_30 = over_30/participants*100
+  ) %>%
+  arrange(desc(percent_over_30))
+```
+
+#Equestrian review of over 30 earning medal over the years
+```{r}
+Train_Equ %>%
+  group_by(Year,Medal_value) %>%
+  summarise(
+    participants = n(),
+    over_30      = sum(Age > 30)
+   ) %>%
+  mutate(
+      percent_over_30 = over_30/participants*100
+  ) %>%
+  arrange(desc(Year))
+```
+
+Now what if we just consider the mean age.  The mean age of all sports over time is 25.5569 while the mean age of Equestrianism is 34 and mean age of Rowing is 25.  And looking at the mean age by year, there is some fluctation but it is minor.  And the mean age for all events has decreased while Equestrian and Rowing do reflect a increase, though it is fluctuation.  
+```{r}
+mean(Athlete_event_whole)
+mean(Train_Equ)
+mean(Test_Row)
+tapply(Athlete_event_whole$Age, Athlete_event_whole$Year, meanfun)
+tapply(Train_Equ$Age, Train_Equ$Year, meanfun)
+tapply(Test_Row$Age, Test_Row$Year, meanfun)
+```
+
+Now the question is if the mean age is higher will that translate to having more athletes over 30 and is it increasing. And this plot shows the age trend for both Rowing and Equestrian combined
+```{r}
+ggplot(Compare_Row_Equest_all, aes(x=Year, y=Age)) +
+  geom_point(shape=1) +    
+  geom_smooth(method=lm)    
+```
+
+
+## Next Steps
+Ultimately I would like to know if I am looking to earn a medal and over age 30 which sport should I choose.  I am now going to compare these two sports, each of which have a higher mean age and discover if this mean has increased over the years.  I need to run analysis on each sport and if the mean age has changed.  And does the higher mean age increase or decrease the probablity of those athletes over 30 earning a medal. 
+
+This trend would not only provide more opportunities to older athletes, but also to those companies that market to athletes on the different needs.  This would open a growth segement in their marketing to these athletes.  
+
+##My findings
+After cleaning the data and running plots which I reflected above, as mentioned I have focused on the Sports Equestrian and Rowing.  I will create my training set using the Equestrian data and then validate using the Rowing data. This plot shows in looking at Equestrian only, the age is increasing over time:
+```{r} 
+p1<-ggplot(Train_Equ, aes(x=Year, y=Age)) +
+  geom_point(shape=1) +    # Use hollow circles
+  geom_smooth(method=lm)    # Add linear regression line 
+
+#Line plot over time Train set
+p2<-ggplot(Train_Equ, aes(x=Year, y= Age_over_30)) +
+  geom_point(shape=1) +    # Use hollow circles
+  geom_smooth(method=lm)    # Add linear regression line
+
+grid.arrange(p1, p2, ncol = 2)
+
+```
+I also ran a few other plots to evaluate Medals and consider Age over 30 and NOC.
+```{r}
+# medal over 30 Train set
+p1<-ggplot(Train_Equ, aes(Team, Age)) +
+  geom_point() +
+  facet_grid(Medal ~.)
+#mean age train
+p2<-ggplot(Train_Equ, aes(Year, mean(Age))) +
+  geom_point() +
+  facet_grid(Medal ~.)
+#bar plot on train set
+p3<-ggplot(Train_Equ, aes (x = Year, fill= factor(Age_over_30))) +
+  geom_histogram(binwidth = 1) +
+  facet_grid(Medal_value ~ .)
+#line chart to review mean age
+p4<-ggplot(Train_Equ, aes(Year, Age, group=mean(Age))) +
+  geom_line(color = "blue") +
+  geom_point()
+#plot to add color on over 30
+p5<-ggplot(Train_Equ, aes(x=Sport, y=Team, color >= 30(Age))) +
+  geom_point(shape=19,      # Use solid circles
+             alpha=1/4, aes(color = Age))     # 1/4 opacity
+
+#plot team and Age and reflect on if earned a medal
+p6<-ggplot(Train_Equ, aes(x=Team, y=Age)) +
+  geom_point(aes(color = Medal_value))
+
+#plot to compare sex vs age
+p7<-ggplot(Train_Equ, aes(x=Sex, y=Age)) +
+  geom_point(aes(color = Medal_value))
+
+grid.arrange(p1, p2, p3, p4, p5, p6, p7, ncol = 3)
+
+```
+Then starting to review linear regressions on my train set I found R squared in the under 1%, which scared me as that is quite low.  
+```{r}
+e.age.out <- lm(Age >30 ~Medal_value,
+              data=Train_Equ)
+summary(e.age.out)
+```
+I made some  modifications by adding NOC and Age was able to raise it to 54%.  This is still much lower than I wish, but currently it is the best result I can achieve.
+``` {r}
+age.out9 <- lm(Age_over_30 ~ Medal_value + NOC + Age,
+                 data=Train_Equ)
+summary(age.out9)
+```
+I also reviewed under Clustering under the Training set.  The majority of the athletes over 30 appear to full under the 2nd Cluster, though in looking at some of the details, I found some ages under 30 listed so the cluster is still mixed. Based on these results, I will not focus on Clustering with the Test set.
+
+```{r}
+plot(clusterathlete)
+rect.hclust(clusterathlete, k=3, border="red")
+
+```
+##Test phase
+Taking this result and moving on to the test group of Rowing in which the article mentioned this is another sport with higher than average age participation and on the increase, let's see if this case is true. 
+We will again look at the proportion of participants in Rowing which shows the trend of increasing as the highest participation percentage has happened in the year 2000+.  And as I look at those over 30 earning medals, the result in 2016 was 6.7% compared to 2008 in which it was 7.1% and 5.3% in 2000 showing since year 2000, there has been an increase in Rowing of those over 30 earning a medal.  Plus it is substantially higher than the results in overall events of 2.5% so participatin in Rowing does suggest a higher opportunity to win a medal for those participants over 30 years old, though perhaps not as high as Equestrianism.
+
+```{r}
+#Reflecting increase over last 20 years
+Test_Row %>%
+  group_by(Year) %>%
+  summarise(
+    participants = n(),
+    over_30      = sum(Age > 30)
+  ) %>%
+  mutate(
+    percent_over_30 = over_30/participants*100
+  ) %>%
+  arrange(desc(percent_over_30))
+```
+#Percentage of those over 30 earning a medal through the years
+```{r}
+Test_Row %>%
+  group_by(Year,Medal_value) %>%
+  summarise(
+    participants = n(),
+    over_30      = sum(Age > 30)
+  ) %>%
+  mutate(
+    percent_over_30 = over_30/participants*100
+  ) %>%
+  arrange(desc(Year))
+```
+
+Again these few plots show Rowing also has age of participation increasing over the years, similar to Equestrian.
+```{r}
+#plot team and Age and reflect on if earned a medal
+p1<-ggplot(Test_Row, aes(x=Team, y=Age)) +
+  geom_point(aes(color = Medal_value))
+
+#plot to compare sex vs age
+p2<-ggplot(Test_Row, aes(x=Sex, y=Age)) +
+  geom_point(aes(color = Medal_value))
+
+#plot over time - test set
+p3<-ggplot(Test_Row, aes(x=Year, y=Age)) +
+  geom_point(shape=1) +    # Use hollow circles
+  geom_smooth(method=lm)    # Add linear regression line 
+
+ 
+#Line plot over time Test set
+p4<-ggplot(Test_Row, aes(x=Year, y= Age_over_30)) +
+  geom_point(shape=1) +    # Use hollow circles
+  geom_smooth(method=lm)    # Add linear regression line 
+
+#line plot over Year, Age
+p5<-ggplot(Test_Row, aes(Year, Age, group=Age_over_30)) +
+  geom_line(color= "blue")+
+  geom_point() 
+
+#bar chart Test set looking at year by age over 30
+p6<-ggplot(Test_Row, aes(x = Year, fill = Age_over_30)) +
+  geom_bar(position = "dodge")
+
+#line chart to review mean age
+p7<-ggplot(Test_Row, aes(Year, Age, group=mean(Age))) +
+  geom_line(color = "blue") +
+  geom_point()
+
+#histogram on Age & medals of test set
+p8<-ggplot(Test_Row, aes(Age, fill = factor(Medal))) +
+  geom_histogram(binwidth = 1)
+
+#bar plot on test set
+p9<-ggplot(Test_Row, aes (x = Year, fill= factor(Age_over_30))) +
+  geom_histogram(binwidth = 1) +
+  facet_grid(Medal_value ~ .)
+
+#plot to add color on over 30
+p10<-ggplot(Test_Row, aes(x=Sport, y=Team, color >= 30(Age))) +
+  geom_point(shape=19,      # Use solid circles
+             alpha=1/4, aes(color = Age))     # 1/4 opacity
+
+grid.arrange(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, ncol = 3)
+
+```
+
+Then following with linear regression result which similar to the train set has 51% r squared.
+```{r}
+age.out21 <- lm(Age_over_30 ~ Medal_value + NOC + Age,
+               data=Test_Row)
+summary(age.out21)
+
+```
+
+After review of these results in both the Training and Test dataset, I feel in Equestrianism and Rowing, there will continue to be an upward trend of older athletes, however it is difficult to predict if they will be successful in earning a medal. However I do not feel it is important in marketing to these customers if in reality they win a medal.  The focus here should be to attract these athletes participating in these sports to use and promote your apparel and shoes.  Focus on reaching out to the competitive groups in these sports reflecting those recent athletes that have been successful at the Olympic games in their Sport even if they are above the mean age for the sport.  Collaborate with them on what are their needs to succeed in their sport.  And most importantly remember your target customer is not just these specific Olympic athletes, but all that aspire to perform as they do.
+
+I hope these results can show Sports companies that focusing on all age groups is important.  This research and predicting trends could continue focusing on NOC for which country teams have the highest chance of earning a medal over 30 to further focus your marketing.  It could also be analysized for Sex, especially focusing on Sport to determine which market segment to focus product creation and market needs.  While the percentage of athletes earning a medal or even participating in an Olympic event over the age of 30 will always be in the minority, highlighting these achievements in your marketing can modivate your target market to aspire to be like them and the products used to get them there.  
+

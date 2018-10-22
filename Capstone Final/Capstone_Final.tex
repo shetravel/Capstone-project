@@ -1,0 +1,1547 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Capstone Project},
+            pdfauthor={Sheila Lynch},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Capstone Project}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Sheila Lynch}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{October 21, 2018}
+
+
+\begin{document}
+\maketitle
+
+\subsection{An introduction to the problem (based on your earlier
+Capstone
+submissions)}\label{an-introduction-to-the-problem-based-on-your-earlier-capstone-submissions}
+
+As I watch the Olympics this past year and listening the the athlete's
+stories, most are young adults competing in the variety of sports. It
+raised the question, how many athletes are over 30 years old. And how
+many of those over 30 years old earn a medal. And while this information
+is good for trivia answers, I am validating as manufactures of these
+sports focus on specific age groups to market product and is there a
+market for athletes over 30.
+
+\subsection{A deeper dive}\label{a-deeper-dive}
+
+Once I found a dataset with Olympic data from 1900 - 2016, detailing all
+Sports and Teams.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str}\NormalTok{(Athlete_event_whole)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Classes 'tbl_df', 'tbl' and 'data.frame':    271116 obs. of  14 variables:
+##  $ ID         : int  1 2 3 4 5 5 5 5 5 5 ...
+##  $ Name       : chr  "A Dijiang" "A Lamusi" "Gunnar Nielsen Aaby" "Edgar Lindenau Aabye" ...
+##  $ Sex        : chr  "M" "M" "M" "M" ...
+##  $ Age        : num  24 23 24 34 21 21 25 25 27 27 ...
+##  $ Team       : chr  "China" "China" "Denmark" "Denmark/Sweden" ...
+##  $ NOC        : chr  "CHN" "CHN" "DEN" "DEN" ...
+##  $ Games      : chr  "1992 Summer" "2012 Summer" "1920 Summer" "1900 Summer" ...
+##  $ Year       : int  1992 2012 1920 1900 1988 1988 1992 1992 1994 1994 ...
+##  $ Season     : chr  "Summer" "Summer" "Summer" "Summer" ...
+##  $ City       : chr  "Barcelona" "London" "Antwerpen" "Paris" ...
+##  $ Sport      : chr  "Basketball" "Judo" "Football" "Tug-Of-War" ...
+##  $ Medal      : chr  "No Medal earned" "No Medal earned" "No Medal earned" "Gold" ...
+##  $ Age_over_30: num  0 0 0 1 0 0 0 0 0 0 ...
+##  $ Medal_value: num  0 0 0 1 0 0 0 0 0 0 ...
+\end{verbatim}
+
+In order to clean the data, I needed to check the structure and
+determine if any critical colunms had NA data. I found both Age and
+Medal columns did include NA or blanks. I first fixed the Medal missing
+data which consisted of Gold, Silver, Bronze and I filled in the blanks
+with ``No medal earn''.\\
+-Clean up Medal fields with NA
+
+Top\_6\_Teams \textless{}- mutate(athlete\_events, Medal =
+ifelse(is.na(Medal), ``No Medal earned'', Medal)) Secondly to correct
+the NA in Age, I considered removing those with NA, but as I looked at
+the age data, I thought filling those in with the mean age avoided
+losing data rows. Top\_6\_Teams \textless{}- mutate(Top\_6\_Teams, Age =
+ifelse(is.na(Age), mean(Age,na.rm = TRUE), Age))
+
+Next, as countries have divided over the years or come back together, I
+looked a the top 7 teams by participation and combined West Germany,
+East Germany and Germany as one team as well as took USSR and Russia
+data to combine in one team. I realize a few other countries have split
+off of USSR, but for data volume, it was not impactful.
+
+Clean up major country changes of German and Russia to combine
+
+Top\_6\_Teams \textless{}- mutate(Top\_6\_Teams, Team = ifelse(Team ==
+``Soviet Union'', ``Russia'', Team)) Top\_6\_Teams \textless{}-
+mutate(Top\_6\_Teams, Team = ifelse(Team == ``East Germany'',
+``Germany'', Team)) Top\_6\_Teams \textless{}- mutate(Top\_6\_Teams,
+Team = ifelse(Team == ``West Germany'', ``Germany'', Team))
+
+A few other steps of cleaning the data was to create a column to reflect
+if athlete was under 30(No) or over 30(Yes). This provided better table
+reviews than true / false - in preference. - create new column to
+simplify those over / under 30
+
+Top\_7\_Team\(Age_over_30 <- ifelse(Top_7_Team\)Age \textgreater{}=
+30,`Yes',`No')
+
+And I also created a column to assign a value to the medals earned.
+While I honestly have not finalized if I just compare the change in age
+based on medals, I wanted this field to explore possibly weighting the
+level of medal. So that is why I gave Gold 3, Silver 2, Bronze 1 as
+there is consideration of giving more credit to gold medals earned than
+bronze. \# -build value to medal
+
+Top\_7\_Team\(Medal_value <- ifelse(Top_7_Team\)Medal == ``Gold'', 3,
+ifelse(Top\_7\_Team\(Medal == "Silver", 2,  + ifelse(Top_7_Team\)Medal
+== ``Bronze'', 1,0)))
+
+All of this seemed necessary to move forward, but as I did start to plot
+and run more results I found having the dataset so split up was just
+causing more work so I started again and focused mainly on the one clean
+data set only creating two sub data sets until it was time to split out
+the train and test sets.
+
+I began to run some results to give the percentages of highest
+proportion establishing the baseline for all athlete events. As seen
+Equestrianism is number 4 Sport in proportion of participants of with
+participants over 30. And Monaco, Namibia and South Sudan have the
+highest proportion of participates over 30, however all are considered
+minimal in participation. So considering the top 7 countries, Great
+Britian, France and Germany are around 19-20\% of participants being
+over age 30.
+
+\section{Which events in your dataset have the highest proportion of
+participants aged over
+30?}\label{which-events-in-your-dataset-have-the-highest-proportion-of-participants-aged-over-30}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Athlete_event_whole }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(Sport) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}
+    \DataTypeTok{participants =} \KeywordTok{n}\NormalTok{(),}
+    \DataTypeTok{over_30      =} \KeywordTok{sum}\NormalTok{(Age }\OperatorTok{>}\StringTok{ }\DecValTok{30}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
+    \DataTypeTok{percent_over_30 =}\NormalTok{ over_}\DecValTok{30}\OperatorTok{/}\NormalTok{participants}\OperatorTok{*}\DecValTok{100}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(percent_over_}\DecValTok{30}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 66 x 4
+##    Sport            participants over_30 percent_over_30
+##    <chr>                   <int>   <int>           <dbl>
+##  1 Art Competitions         3578    2700            75.5
+##  2 Roque                       4       3            75  
+##  3 Polo                       95      70            73.7
+##  4 Equestrianism            6344    3906            61.6
+##  5 Shooting                11448    6380            55.7
+##  6 Jeu De Paume               11       6            54.5
+##  7 Alpinism                   25      13            52  
+##  8 Curling                   463     227            49.0
+##  9 Motorboating               17       8            47.1
+## 10 Croquet                    19       8            42.1
+## # ... with 56 more rows
+\end{verbatim}
+
+\section{Which countries have the highest proportion of participants
+aged over
+30?}\label{which-countries-have-the-highest-proportion-of-participants-aged-over-30}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Athlete_event_whole }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(NOC) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}
+    \DataTypeTok{participants =} \KeywordTok{n}\NormalTok{(),}
+    \DataTypeTok{over_30      =} \KeywordTok{sum}\NormalTok{(Age }\OperatorTok{>}\StringTok{ }\DecValTok{30}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
+    \DataTypeTok{percent_over_30 =}\NormalTok{ over_}\DecValTok{30}\OperatorTok{/}\NormalTok{participants}\OperatorTok{*}\DecValTok{100}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(percent_over_}\DecValTok{30}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 230 x 4
+##    NOC   participants over_30 percent_over_30
+##    <chr>        <int>   <int>           <dbl>
+##  1 MON            197      71            36.0
+##  2 NAM             77      26            33.8
+##  3 SSD              3       1            33.3
+##  4 SMR            181      51            28.2
+##  5 AHO             79      22            27.8
+##  6 ASA             37      10            27.0
+##  7 POR           1522     393            25.8
+##  8 TJK             70      18            25.7
+##  9 BER            212      53            25  
+## 10 BHU             36       9            25  
+## # ... with 220 more rows
+\end{verbatim}
+
+\section{The highest proportion of participants aged over 30 for top 7
+countries}\label{the-highest-proportion-of-participants-aged-over-30-for-top-7-countries}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Athlete_Top_Teams }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(NOC) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}
+    \DataTypeTok{participants =} \KeywordTok{n}\NormalTok{(),}
+    \DataTypeTok{over_30      =} \KeywordTok{sum}\NormalTok{(Age }\OperatorTok{>}\StringTok{ }\DecValTok{30}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
+    \DataTypeTok{percent_over_30 =}\NormalTok{ over_}\DecValTok{30}\OperatorTok{/}\NormalTok{participants}\OperatorTok{*}\DecValTok{100}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(percent_over_}\DecValTok{30}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 8 x 4
+##   NOC   participants over_30 percent_over_30
+##   <chr>        <int>   <int>           <dbl>
+## 1 GBR          11404    2255           19.8 
+## 2 FRA          11988    2262           18.9 
+## 3 GER           9326    1750           18.8 
+## 4 USA          17847    3107           17.4 
+## 5 ITA          10260    1767           17.2 
+## 6 RUS           4922     750           15.2 
+## 7 FRG           3199     322           10.1 
+## 8 JPN           8289     780            9.41
+\end{verbatim}
+
+And considering the overall picture, I can see the highest proportion of
+athletes over 30 in all of the events/time have the top 5 being over 65
+years ago. And finally lets consider the proportion of the participants
+that earned medal over age 30 in the last 20 years, which in 2016 was
+2.6\% compared to 2008 it was 2.5\%, not much change. It was 1920 that
+had the highest percentage of 11.7\%.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Athlete_event_whole }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(Year) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}
+    \DataTypeTok{participants =} \KeywordTok{n}\NormalTok{(),}
+    \DataTypeTok{over_30      =} \KeywordTok{sum}\NormalTok{(Age }\OperatorTok{>}\StringTok{ }\DecValTok{30}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
+    \DataTypeTok{percent_over_30 =}\NormalTok{ over_}\DecValTok{30}\OperatorTok{/}\NormalTok{participants}\OperatorTok{*}\DecValTok{100}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(percent_over_}\DecValTok{30}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 35 x 4
+##     Year participants over_30 percent_over_30
+##    <int>        <int>   <int>           <dbl>
+##  1  1932         3321    1173            35.3
+##  2  1920         4292    1302            30.3
+##  3  1948         7480    2035            27.2
+##  4  1912         4040    1067            26.4
+##  5  1928         5574    1425            25.6
+##  6  1924         5693    1372            24.1
+##  7  1936         7401    1661            22.4
+##  8  1900         1936     430            22.2
+##  9  2010         4402     870            19.8
+## 10  1952         9358    1846            19.7
+## # ... with 25 more rows
+\end{verbatim}
+
+\section{Percentage of those over 30 over the years that earn a
+medal}\label{percentage-of-those-over-30-over-the-years-that-earn-a-medal}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Athlete_event_whole }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(Year,Medal_value) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}
+    \DataTypeTok{participants =} \KeywordTok{n}\NormalTok{(),}
+    \DataTypeTok{over_30      =} \KeywordTok{sum}\NormalTok{(Age }\OperatorTok{>}\StringTok{ }\DecValTok{30}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
+    \DataTypeTok{percent_over_30 =}\NormalTok{ over_}\DecValTok{30}\OperatorTok{/}\NormalTok{participants}\OperatorTok{*}\DecValTok{100}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(Year))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 70 x 5
+## # Groups:   Year [35]
+##     Year Medal_value participants over_30 percent_over_30
+##    <int>       <dbl>        <int>   <int>           <dbl>
+##  1  2016           0        11665    2148            18.4
+##  2  2016           1         2023     350            17.3
+##  3  2014           0         4294     715            16.7
+##  4  2014           1          597     107            17.9
+##  5  2012           0        10979    1926            17.5
+##  6  2012           1         1941     298            15.4
+##  7  2010           0         3882     754            19.4
+##  8  2010           1          520     116            22.3
+##  9  2008           0        11554    1995            17.3
+## 10  2008           1         2048     343            16.7
+## # ... with 60 more rows
+\end{verbatim}
+
+As I am considering Equestrian and Rowing, I can see that Equestrianism
+has a very high participation over age 30 at 61\%, while Rowing is still
+just around 10.6\%. However my question is if the mean age is increasing
+for these sports.
+
+\section{The highest proportion of participants aged over 30 of both
+Rowing and
+Equestrian}\label{the-highest-proportion-of-participants-aged-over-30-of-both-rowing-and-equestrian}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Compare_Row_Equest_all }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(Sport) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}
+    \DataTypeTok{participants =} \KeywordTok{n}\NormalTok{(),}
+    \DataTypeTok{over_30      =} \KeywordTok{sum}\NormalTok{(Age }\OperatorTok{>}\StringTok{ }\DecValTok{30}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
+    \DataTypeTok{percent_over_30 =}\NormalTok{ over_}\DecValTok{30}\OperatorTok{/}\NormalTok{participants}\OperatorTok{*}\DecValTok{100}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(percent_over_}\DecValTok{30}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 4
+##   Sport         participants over_30 percent_over_30
+##   <chr>                <int>   <int>           <dbl>
+## 1 Equestrianism         6344    3906            61.6
+## 2 Rowing               10595    1124            10.6
+\end{verbatim}
+
+\subsection{Visual aids}\label{visual-aids}
+
+I ran some plots to see how the mean age has changed over time. This
+plot shows the mean age has slightly decreased for overall athlete
+events.
+\includegraphics{Capstone_Final_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+This plot is reflecting the variance per total involved either over or
+under 30 years old.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(Athlete_event_whole, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Year, }\DataTypeTok{fill =}\NormalTok{ Age_over_}\DecValTok{30}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{position =} \StringTok{"dodge"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Capstone_Final_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+Then I started to think what possible articles have already been written
+on this topic. So I went to Google and found 3 articles that help to
+provide more direction.
+
+The first article discusses Elite Athletes over 40 for the Pyeongchange
+Winter Olympics:
+\url{https://www.bloomberg.com/news/articles/2018-02-14/wisdom-and-drive-older-olympians-becoming-the-norm}
+. The second article discusses is 30 the new 20 for Olympic Athletes:
+\url{https://venngage.com/blog/olympics/} . Both of these articles
+discuss athletes that were successful and the latter article does
+analysis comparing Gymnastics to Track \& Field. This analysis combined
+with the third article I read
+\url{https://www.verywellfit.com/olympic-sports-youre-not-too-old-for-4075439}
+which discusses 10 Summer Olmpic Sports Your not too old to quality for.
+As the 2020 Summer Olympic games are upcoming and the dataset data runs
+through 2016 Summer Olmpics, I thought I will select 2 of the sports on
+the list and compare if the average age is actually increasing. Or if
+they have always been sports that have above typical Olympic athlete
+mean age. I chose:
+
+\subsection{Rowing}\label{rowing}
+
+\begin{figure}
+\centering
+\includegraphics{https://timedotcom.files.wordpress.com/2016/06/olympics.jpg}
+\caption{alt text}
+\end{figure}
+
+\subsection{Equestrianism}\label{equestrianism}
+
+\begin{figure}
+\centering
+\includegraphics{http://images.nbcolympics.com/www.nbcolympics.com/field_image/19August2016/usatsi_9486292-1_0.jpg}
+\caption{alt text}
+\end{figure}
+
+Both sports have a long history in the Olmpics and moderate
+participation.
+
+Let's start by looking at the proportion of particpants for
+Equestrianism. Considering participation over the years, the top 3 are
+in the year 2000+. And as I look at those over 30 earning medals, the
+result in 2016 was 9.9\% compared to 2008 in which it was 12.1\% and
+12.5\% in 2000 which shows while particpation of those over 30 has
+increased in Equestrianism, it has not reflected in earning a medal,
+however it is vastly higher than the results in overall events of 2.5\%
+so participatin in Equestrianism does suggest a higher opportunity to
+win a medal for those participants over 30 years old.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Train_Equ }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(Year) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}
+    \DataTypeTok{participants =} \KeywordTok{n}\NormalTok{(),}
+    \DataTypeTok{over_30      =} \KeywordTok{sum}\NormalTok{(Age }\OperatorTok{>}\StringTok{ }\DecValTok{30}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
+    \DataTypeTok{percent_over_30 =}\NormalTok{ over_}\DecValTok{30}\OperatorTok{/}\NormalTok{participants}\OperatorTok{*}\DecValTok{100}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(percent_over_}\DecValTok{30}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 25 x 4
+##     Year participants over_30 percent_over_30
+##    <int>        <int>   <int>           <dbl>
+##  1  2012          350     266            76  
+##  2  2016          355     265            74.6
+##  3  2008          340     253            74.4
+##  4  1932           65      48            73.8
+##  5  2000          295     217            73.6
+##  6  1928          232     168            72.4
+##  7  1948          207     145            70.0
+##  8  1936          256     179            69.9
+##  9  1996          343     239            69.7
+## 10  2004          371     242            65.2
+## # ... with 15 more rows
+\end{verbatim}
+
+\section{Equestrian review of over 30 earning medal over the
+years}\label{equestrian-review-of-over-30-earning-medal-over-the-years}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Train_Equ }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(Year,Medal_value) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}
+    \DataTypeTok{participants =} \KeywordTok{n}\NormalTok{(),}
+    \DataTypeTok{over_30      =} \KeywordTok{sum}\NormalTok{(Age }\OperatorTok{>}\StringTok{ }\DecValTok{30}\NormalTok{)}
+\NormalTok{   ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
+      \DataTypeTok{percent_over_30 =}\NormalTok{ over_}\DecValTok{30}\OperatorTok{/}\NormalTok{participants}\OperatorTok{*}\DecValTok{100}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(Year))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 50 x 5
+## # Groups:   Year [25]
+##     Year Medal_value participants over_30 percent_over_30
+##    <int>       <dbl>        <int>   <int>           <dbl>
+##  1  2016           0          310     230            74.2
+##  2  2016           1           45      35            77.8
+##  3  2012           0          305     238            78.0
+##  4  2012           1           45      28            62.2
+##  5  2008           0          295     212            71.9
+##  6  2008           1           45      41            91.1
+##  7  2004           0          324     205            63.3
+##  8  2004           1           47      37            78.7
+##  9  2000           0          250     180            72  
+## 10  2000           1           45      37            82.2
+## # ... with 40 more rows
+\end{verbatim}
+
+Now what if we just consider the mean age. The mean age of all sports
+over time is 25.5569 while the mean age of Equestrianism is 34 and mean
+age of Rowing is 25. And looking at the mean age by year, there is some
+fluctation but it is minor. And the mean age for all events has
+decreased while Equestrian and Rowing do reflect a increase, though it
+is fluctuation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(Athlete_event_whole)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in mean.default(Athlete_event_whole): argument is not numeric or
+## logical: returning NA
+\end{verbatim}
+
+\begin{verbatim}
+## [1] NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(Train_Equ)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in mean.default(Train_Equ): argument is not numeric or logical:
+## returning NA
+\end{verbatim}
+
+\begin{verbatim}
+## [1] NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(Test_Row)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in mean.default(Test_Row): argument is not numeric or logical:
+## returning NA
+\end{verbatim}
+
+\begin{verbatim}
+## [1] NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tapply}\NormalTok{(Athlete_event_whole}\OperatorTok{$}\NormalTok{Age, Athlete_event_whole}\OperatorTok{$}\NormalTok{Year, meanfun)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $`1896`
+##      min      max     mean 
+## 10.00000 40.00000 24.42835 
+## 
+## $`1900`
+##      min      max     mean 
+## 13.00000 71.00000 27.61516 
+## 
+## $`1904`
+##      min      max     mean 
+## 14.00000 71.00000 26.45779 
+## 
+## $`1906`
+##      min      max     mean 
+## 13.00000 54.00000 26.45284 
+## 
+## $`1908`
+##      min      max     mean 
+## 14.00000 61.00000 26.67444 
+## 
+## $`1912`
+##     min     max    mean 
+## 13.0000 67.0000 27.4621 
+## 
+## $`1920`
+##      min      max     mean 
+## 13.00000 72.00000 28.55582 
+## 
+## $`1924`
+##      min      max     mean 
+## 11.00000 81.00000 27.80836 
+## 
+## $`1928`
+##      min      max     mean 
+## 11.00000 97.00000 28.49826 
+## 
+## $`1932`
+##    min    max   mean 
+## 11.000 96.000 31.884 
+## 
+## $`1936`
+##      min      max     mean 
+## 11.00000 74.00000 27.47353 
+## 
+## $`1948`
+##      min      max     mean 
+## 12.00000 84.00000 28.27659 
+## 
+## $`1952`
+##      min      max     mean 
+## 12.00000 65.00000 26.14365 
+## 
+## $`1956`
+##      min      max     mean 
+## 12.00000 67.00000 25.89001 
+## 
+## $`1960`
+##      min      max     mean 
+## 11.00000 65.00000 25.17813 
+## 
+## $`1964`
+##      min      max     mean 
+## 12.00000 60.00000 24.94802 
+## 
+## $`1968`
+##      min      max     mean 
+## 11.00000 68.00000 24.26278 
+## 
+## $`1972`
+##      min      max     mean 
+## 12.00000 69.00000 24.31863 
+## 
+## $`1976`
+##      min      max     mean 
+## 12.00000 70.00000 23.85031 
+## 
+## $`1980`
+##      min      max     mean 
+## 13.00000 70.00000 23.73371 
+## 
+## $`1984`
+##      min      max     mean 
+## 12.00000 60.00000 23.92926 
+## 
+## $`1988`
+##      min      max     mean 
+## 11.00000 70.00000 24.09051 
+## 
+## $`1992`
+##      min      max     mean 
+## 11.00000 62.00000 24.32221 
+## 
+## $`1994`
+##      min      max     mean 
+## 13.00000 46.00000 24.42282 
+## 
+## $`1996`
+##      min      max     mean 
+## 12.00000 63.00000 24.91542 
+## 
+## $`1998`
+##      min      max     mean 
+## 14.00000 50.00000 25.16342 
+## 
+## $`2000`
+##      min      max     mean 
+## 13.00000 63.00000 25.42251 
+## 
+## $`2002`
+##      min      max     mean 
+## 15.00000 48.00000 25.91628 
+## 
+## $`2004`
+##      min      max     mean 
+## 13.00000 57.00000 25.63951 
+## 
+## $`2006`
+##      min      max     mean 
+## 14.00000 52.00000 25.95915 
+## 
+## $`2008`
+##      min      max     mean 
+## 12.00000 67.00000 25.73409 
+## 
+## $`2010`
+##      min      max     mean 
+## 15.00000 51.00000 26.12426 
+## 
+## $`2012`
+##      min      max     mean 
+## 13.00000 71.00000 25.96138 
+## 
+## $`2014`
+##      min      max     mean 
+## 15.00000 55.00000 25.98732 
+## 
+## $`2016`
+##      min      max     mean 
+## 13.00000 62.00000 26.20792
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tapply}\NormalTok{(Train_Equ}\OperatorTok{$}\NormalTok{Age, Train_Equ}\OperatorTok{$}\NormalTok{Year, meanfun)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $`1900`
+##      min      max     mean 
+## 20.00000 69.00000 32.79808 
+## 
+## $`1912`
+##      min      max     mean 
+## 19.00000 51.00000 32.18759 
+## 
+## $`1920`
+##      min      max     mean 
+## 21.00000 59.00000 30.72746 
+## 
+## $`1924`
+##     min     max    mean 
+## 21.0000 59.0000 31.8678 
+## 
+## $`1928`
+##      min      max     mean 
+## 24.00000 63.00000 35.86648 
+## 
+## $`1932`
+##      min      max     mean 
+## 25.55690 49.00000 36.02064 
+## 
+## $`1936`
+##      min      max     mean 
+## 22.00000 72.00000 35.48047 
+## 
+## $`1948`
+##      min      max     mean 
+## 23.00000 55.00000 35.58796 
+## 
+## $`1952`
+##      min      max     mean 
+## 18.00000 63.00000 34.07445 
+## 
+## $`1956`
+##     min     max    mean 
+## 19.0000 67.0000 33.2526 
+## 
+## $`1960`
+##      min      max     mean 
+## 18.00000 65.00000 32.60548 
+## 
+## $`1964`
+##      min      max     mean 
+## 17.00000 53.00000 31.79911 
+## 
+## $`1968`
+##      min      max     mean 
+## 20.00000 66.00000 32.37339 
+## 
+## $`1972`
+##      min      max     mean 
+## 19.00000 69.00000 32.31288 
+## 
+## $`1976`
+##      min      max     mean 
+## 18.00000 61.00000 31.93496 
+## 
+## $`1980`
+##      min      max     mean 
+## 18.00000 57.00000 32.10656 
+## 
+## $`1984`
+##      min      max     mean 
+## 18.00000 50.00000 31.20641 
+## 
+## $`1988`
+##     min     max    mean 
+## 16.0000 63.0000 32.7963 
+## 
+## $`1992`
+##      min      max     mean 
+## 19.00000 56.00000 33.51733 
+## 
+## $`1996`
+##      min      max     mean 
+## 19.00000 63.00000 34.84257 
+## 
+## $`2000`
+##     min     max    mean 
+## 20.0000 54.0000 35.5661 
+## 
+## $`2004`
+##      min      max     mean 
+## 18.00000 57.00000 35.15633 
+## 
+## $`2008`
+##      min      max     mean 
+## 16.00000 67.00000 36.90588 
+## 
+## $`2012`
+##   min   max  mean 
+## 18.00 71.00 37.82 
+## 
+## $`2016`
+##      min      max     mean 
+## 18.00000 62.00000 37.63099
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tapply}\NormalTok{(Test_Row}\OperatorTok{$}\NormalTok{Age, Test_Row}\OperatorTok{$}\NormalTok{Year, meanfun)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $`1900`
+##      min      max     mean 
+## 15.00000 36.00000 24.38715 
+## 
+## $`1904`
+##      min      max     mean 
+## 16.00000 40.00000 26.81177 
+## 
+## $`1906`
+##      min      max     mean 
+## 14.00000 40.00000 25.34489 
+## 
+## $`1908`
+##      min      max     mean 
+## 18.00000 44.00000 24.48421 
+## 
+## $`1912`
+##      min      max     mean 
+## 16.00000 43.00000 25.06882 
+## 
+## $`1920`
+##      min      max     mean 
+## 15.00000 58.00000 26.20331 
+## 
+## $`1924`
+##      min      max     mean 
+## 14.00000 41.00000 25.11429 
+## 
+## $`1928`
+##      min      max     mean 
+## 13.00000 42.00000 24.35621 
+## 
+## $`1932`
+##      min      max     mean 
+## 16.00000 41.00000 24.98344 
+## 
+## $`1936`
+##      min      max     mean 
+## 12.00000 45.00000 24.81227 
+## 
+## $`1948`
+##      min      max     mean 
+## 16.00000 45.00000 25.45278 
+## 
+## $`1952`
+##      min      max     mean 
+## 14.00000 44.00000 24.58599 
+## 
+## $`1956`
+##      min      max     mean 
+## 13.00000 39.00000 24.32709 
+## 
+## $`1960`
+##      min      max     mean 
+## 13.00000 38.00000 24.01574 
+## 
+## $`1964`
+##      min      max     mean 
+## 14.00000 60.00000 24.60582 
+## 
+## $`1968`
+##      min      max     mean 
+## 14.00000 40.00000 24.21229 
+## 
+## $`1972`
+##      min      max     mean 
+## 12.00000 41.00000 24.36099 
+## 
+## $`1976`
+##      min      max     mean 
+## 14.00000 45.00000 24.21739 
+## 
+## $`1980`
+##      min      max     mean 
+## 14.00000 48.00000 24.21311 
+## 
+## $`1984`
+##      min      max     mean 
+## 12.00000 47.00000 24.53763 
+## 
+## $`1988`
+##      min      max     mean 
+## 15.00000 56.00000 25.08423 
+## 
+## $`1992`
+##      min      max     mean 
+## 11.00000 50.00000 25.19769 
+## 
+## $`1996`
+##      min      max     mean 
+## 16.00000 51.00000 25.84219 
+## 
+## $`2000`
+##      min      max     mean 
+## 17.00000 51.00000 26.71123 
+## 
+## $`2004`
+##      min      max     mean 
+## 17.00000 40.00000 26.15385 
+## 
+## $`2008`
+##      min      max     mean 
+## 19.00000 48.00000 26.71403 
+## 
+## $`2012`
+##   min   max  mean 
+## 17.00 52.00 27.12 
+## 
+## $`2016`
+##      min      max     mean 
+## 18.00000 56.00000 26.86727
+\end{verbatim}
+
+Now the question is if the mean age is higher will that translate to
+having more athletes over 30 and is it increasing. And this plot shows
+the age trend for both Rowing and Equestrian combined
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(Compare_Row_Equest_all, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Year, }\DataTypeTok{y=}\NormalTok{Age)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{shape=}\DecValTok{1}\NormalTok{) }\OperatorTok{+}\StringTok{    }
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method=}\NormalTok{lm)    }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Capstone_Final_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\subsection{Next Steps}\label{next-steps}
+
+Ultimately I would like to know if I am looking to earn a medal and over
+age 30 which sport should I choose. I am now going to compare these two
+sports, each of which have a higher mean age and discover if this mean
+has increased over the years. I need to run analysis on each sport and
+if the mean age has changed. And does the higher mean age increase or
+decrease the probablity of those athletes over 30 earning a medal.
+
+This trend would not only provide more opportunities to older athletes,
+but also to those companies that market to athletes on the different
+needs. This would open a growth segement in their marketing to these
+athletes.
+
+\subsection{My findings}\label{my-findings}
+
+After cleaning the data and running plots which I reflected above, as
+mentioned I have focused on the Sports Equestrian and Rowing. I will
+create my training set using the Equestrian data and then validate using
+the Rowing data. This plot shows in looking at Equestrian only, the age
+is increasing over time:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1<-}\KeywordTok{ggplot}\NormalTok{(Train_Equ, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Year, }\DataTypeTok{y=}\NormalTok{Age)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{shape=}\DecValTok{1}\NormalTok{) }\OperatorTok{+}\StringTok{    }\CommentTok{# Use hollow circles}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method=}\NormalTok{lm)    }\CommentTok{# Add linear regression line }
+
+\CommentTok{#Line plot over time Train set}
+\NormalTok{p2<-}\KeywordTok{ggplot}\NormalTok{(Train_Equ, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Year, }\DataTypeTok{y=}\NormalTok{ Age_over_}\DecValTok{30}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{shape=}\DecValTok{1}\NormalTok{) }\OperatorTok{+}\StringTok{    }\CommentTok{# Use hollow circles}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method=}\NormalTok{lm)    }\CommentTok{# Add linear regression line}
+
+\KeywordTok{grid.arrange}\NormalTok{(p1, p2, }\DataTypeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Capstone_Final_files/figure-latex/unnamed-chunk-14-1.pdf}
+I also ran a few other plots to evaluate Medals and consider Age over 30
+and NOC.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# medal over 30 Train set}
+\NormalTok{p1<-}\KeywordTok{ggplot}\NormalTok{(Train_Equ, }\KeywordTok{aes}\NormalTok{(Team, Age)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{facet_grid}\NormalTok{(Medal }\OperatorTok{~}\NormalTok{.)}
+\CommentTok{#mean age train}
+\NormalTok{p2<-}\KeywordTok{ggplot}\NormalTok{(Train_Equ, }\KeywordTok{aes}\NormalTok{(Year, }\KeywordTok{mean}\NormalTok{(Age))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{facet_grid}\NormalTok{(Medal }\OperatorTok{~}\NormalTok{.)}
+\CommentTok{#bar plot on train set}
+\NormalTok{p3<-}\KeywordTok{ggplot}\NormalTok{(Train_Equ, }\KeywordTok{aes}\NormalTok{ (}\DataTypeTok{x =}\NormalTok{ Year, }\DataTypeTok{fill=} \KeywordTok{factor}\NormalTok{(Age_over_}\DecValTok{30}\NormalTok{))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{facet_grid}\NormalTok{(Medal_value }\OperatorTok{~}\StringTok{ }\NormalTok{.)}
+\CommentTok{#line chart to review mean age}
+\NormalTok{p4<-}\KeywordTok{ggplot}\NormalTok{(Train_Equ, }\KeywordTok{aes}\NormalTok{(Year, Age, }\DataTypeTok{group=}\KeywordTok{mean}\NormalTok{(Age))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{color =} \StringTok{"blue"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
+\CommentTok{#plot to add color on over 30}
+\NormalTok{p5<-}\KeywordTok{ggplot}\NormalTok{(Train_Equ, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Sport, }\DataTypeTok{y=}\NormalTok{Team, color }\OperatorTok{>=}\StringTok{ }\DecValTok{30}\NormalTok{(Age))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{shape=}\DecValTok{19}\NormalTok{,      }\CommentTok{# Use solid circles}
+             \DataTypeTok{alpha=}\DecValTok{1}\OperatorTok{/}\DecValTok{4}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Age))     }\CommentTok{# 1/4 opacity}
+
+\CommentTok{#plot team and Age and reflect on if earned a medal}
+\NormalTok{p6<-}\KeywordTok{ggplot}\NormalTok{(Train_Equ, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Team, }\DataTypeTok{y=}\NormalTok{Age)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Medal_value))}
+
+\CommentTok{#plot to compare sex vs age}
+\NormalTok{p7<-}\KeywordTok{ggplot}\NormalTok{(Train_Equ, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Sex, }\DataTypeTok{y=}\NormalTok{Age)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Medal_value))}
+
+\KeywordTok{grid.arrange}\NormalTok{(p1, p2, p3, p4, p5, p6, p7, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Capstone_Final_files/figure-latex/unnamed-chunk-15-1.pdf}
+Then starting to review linear regressions on my train set I found R
+squared in the under 1\%, which scared me as that is quite low.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e.age.out <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(Age }\OperatorTok{>}\DecValTok{30} \OperatorTok{~}\NormalTok{Medal_value,}
+              \DataTypeTok{data=}\NormalTok{Train_Equ)}
+\KeywordTok{summary}\NormalTok{(e.age.out)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Age > 30 ~ Medal_value, data = Train_Equ)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.6829 -0.6036  0.3964  0.3964  0.3964 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 0.603644   0.006622  91.157  < 2e-16 ***
+## Medal_value 0.079258   0.016979   4.668  3.1e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.4857 on 6342 degrees of freedom
+## Multiple R-squared:  0.003424,   Adjusted R-squared:  0.003267 
+## F-statistic: 21.79 on 1 and 6342 DF,  p-value: 3.104e-06
+\end{verbatim}
+
+I made some modifications by adding NOC and Age was able to raise it to
+54\%. This is still much lower than I wish, but currently it is the best
+result I can achieve.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{age.out9 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(Age_over_}\DecValTok{30} \OperatorTok{~}\StringTok{ }\NormalTok{Medal_value }\OperatorTok{+}\StringTok{ }\NormalTok{NOC }\OperatorTok{+}\StringTok{ }\NormalTok{Age,}
+                 \DataTypeTok{data=}\NormalTok{Train_Equ)}
+\KeywordTok{summary}\NormalTok{(age.out9)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Age_over_30 ~ Medal_value + NOC + Age, data = Train_Equ)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.13278 -0.29131 -0.00316  0.29462  0.67961 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -1.1284387  0.2289323  -4.929 8.47e-07 ***
+## Medal_value  0.0209401  0.0120189   1.742   0.0815 .  
+## NOCARG       0.4810593  0.2291191   2.100   0.0358 *  
+## NOCAUS       0.4348595  0.2285880   1.902   0.0572 .  
+## NOCAUT       0.3697540  0.2296910   1.610   0.1075    
+## NOCAZE       0.2449358  0.3220121   0.761   0.4469    
+## NOCBEL       0.3567321  0.2287614   1.559   0.1190    
+## NOCBER       0.4212939  0.2474417   1.703   0.0887 .  
+## NOCBLR       0.4564647  0.2628048   1.737   0.0825 .  
+## NOCBOL       0.2971546  0.2938628   1.011   0.3120    
+## NOCBRA       0.4382859  0.2290212   1.914   0.0557 .  
+## NOCBUL       0.4689073  0.2306512   2.033   0.0421 *  
+## NOCCAM       0.0240601  0.3218951   0.075   0.9404    
+## NOCCAN       0.3756046  0.2285015   1.644   0.1003    
+## NOCCHI       0.5391514  0.2320274   2.324   0.0202 *  
+## NOCCHN       0.3559406  0.2474541   1.438   0.1504    
+## NOCCOL       0.4220815  0.2393085   1.764   0.0778 .  
+## NOCCRO       0.5220699  0.3217140   1.623   0.1047    
+## NOCCZE       0.8031844  0.3218010   2.496   0.0126 *  
+## NOCDEN       0.5008998  0.2292437   2.185   0.0289 *  
+## NOCDOM       0.2007961  0.3939473   0.510   0.6103    
+## NOCECU       0.4029190  0.2937639   1.372   0.1702    
+## NOCEGY       0.4577419  0.2393547   1.912   0.0559 .  
+## NOCESP       0.4611822  0.2287254   2.016   0.0438 *  
+## NOCEUN       0.3769423  0.2423865   1.555   0.1200    
+## NOCFIN       0.4055976  0.2315577   1.752   0.0799 .  
+## NOCFRA       0.4229171  0.2280981   1.854   0.0638 .  
+## NOCFRG       0.4116670  0.2298411   1.791   0.0733 .  
+## NOCGBR       0.3852649  0.2282212   1.688   0.0914 .  
+## NOCGDR       0.4864851  0.2356909   2.064   0.0391 *  
+## NOCGER       0.3922728  0.2284476   1.717   0.0860 .  
+## NOCGRE       0.3865177  0.2458617   1.572   0.1160    
+## NOCGUA       0.3306206  0.2629107   1.258   0.2086    
+## NOCHKG       0.4577915  0.2629878   1.741   0.0818 .  
+## NOCHUN       0.4301576  0.2303542   1.867   0.0619 .  
+## NOCIND       0.4991685  0.2493418   2.002   0.0453 *  
+## NOCIRI       0.1244582  0.3941806   0.316   0.7522    
+## NOCIRL       0.4434801  0.2288989   1.937   0.0527 .  
+## NOCISV       0.1244582  0.2788981   0.446   0.6554    
+## NOCITA       0.3921511  0.2284560   1.717   0.0861 .  
+## NOCJAM       0.5622291  0.3217242   1.748   0.0806 .  
+## NOCJOR       0.1445378  0.2789104   0.518   0.6043    
+## NOCJPN       0.3663169  0.2287960   1.601   0.1094    
+## NOCKOR       0.3814473  0.2319582   1.644   0.1001    
+## NOCKSA       0.3655631  0.2356978   1.551   0.1210    
+## NOCLIE      -0.0361787  0.3941167  -0.092   0.9269    
+## NOCMAR       0.0019903  0.3217092   0.006   0.9951    
+## NOCMEX       0.4310737  0.2288677   1.884   0.0597 .  
+## NOCNED       0.4449156  0.2285478   1.947   0.0516 .  
+## NOCNOR       0.4389559  0.2313494   1.897   0.0578 .  
+## NOCNZL       0.5009567  0.2294889   2.183   0.0291 *  
+## NOCPER       0.7228660  0.3217724   2.247   0.0247 *  
+## NOCPHI       0.5769423  0.2938371   1.963   0.0496 *  
+## NOCPLE      -0.0401592  0.3939399  -0.102   0.9188    
+## NOCPOL       0.4751127  0.2294732   2.070   0.0385 *  
+## NOCPOR       0.4731944  0.2295491   2.061   0.0393 *  
+## NOCPUR       0.3011689  0.2581942   1.166   0.2435    
+## NOCQAT       0.4537815  0.2545555   1.783   0.0747 .  
+## NOCROU       0.4200058  0.2316596   1.813   0.0699 .  
+## NOCRSA       0.5630252  0.2692744   2.091   0.0366 *  
+## NOCRUS       0.3946471  0.2340376   1.686   0.0918 .  
+## NOCSUI       0.4408628  0.2284470   1.930   0.0537 .  
+## NOCSWE       0.4249780  0.2281956   1.862   0.0626 .  
+## NOCSYR       0.3654135  0.3942949   0.927   0.3541    
+## NOCTCH       0.4301602  0.2316044   1.857   0.0633 .  
+## NOCTHA       0.3453339  0.3220727   1.072   0.2837    
+## NOCTPE       0.0441397  0.3941474   0.112   0.9108    
+## NOCTUR       0.3452357  0.2334662   1.479   0.1393    
+## NOCUAE       0.2449358  0.3942350   0.621   0.5344    
+## NOCUAR       0.5025554  0.2628262   1.912   0.0559 .  
+## NOCUKR       0.5870956  0.2361513   2.486   0.0129 *  
+## NOCURS       0.3781259  0.2291089   1.650   0.0989 .  
+## NOCURU       0.2038921  0.2517333   0.810   0.4180    
+## NOCUSA       0.4669012  0.2281430   2.047   0.0407 *  
+## NOCVEN       0.4794869  0.2493824   1.923   0.0546 .  
+## NOCYUG       0.5232072  0.2580845   2.027   0.0427 *  
+## NOCZIM      -0.0361787  0.3941167  -0.092   0.9269    
+## Age          0.0401592  0.0004922  81.592  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.3217 on 6266 degrees of freedom
+## Multiple R-squared:  0.5382, Adjusted R-squared:  0.5325 
+## F-statistic: 94.84 on 77 and 6266 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+I also reviewed under Clustering under the Training set. The majority of
+the athletes over 30 appear to full under the 2nd Cluster, though in
+looking at some of the details, I found some ages under 30 listed so the
+cluster is still mixed. Based on these results, I will not focus on
+Clustering with the Test set.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(clusterathlete)}
+\KeywordTok{rect.hclust}\NormalTok{(clusterathlete, }\DataTypeTok{k=}\DecValTok{3}\NormalTok{, }\DataTypeTok{border=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Capstone_Final_files/figure-latex/unnamed-chunk-18-1.pdf}
+\#\#Test phase Taking this result and moving on to the test group of
+Rowing in which the article mentioned this is another sport with higher
+than average age participation and on the increase, let's see if this
+case is true. We will again look at the proportion of participants in
+Rowing which shows the trend of increasing as the highest participation
+percentage has happened in the year 2000+. And as I look at those over
+30 earning medals, the result in 2016 was 6.7\% compared to 2008 in
+which it was 7.1\% and 5.3\% in 2000 showing since year 2000, there has
+been an increase in Rowing of those over 30 earning a medal. Plus it is
+substantially higher than the results in overall events of 2.5\% so
+participatin in Rowing does suggest a higher opportunity to win a medal
+for those participants over 30 years old, though perhaps not as high as
+Equestrianism.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Reflecting increase over last 20 years}
+\NormalTok{Test_Row }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(Year) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}
+    \DataTypeTok{participants =} \KeywordTok{n}\NormalTok{(),}
+    \DataTypeTok{over_30      =} \KeywordTok{sum}\NormalTok{(Age }\OperatorTok{>}\StringTok{ }\DecValTok{30}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
+    \DataTypeTok{percent_over_30 =}\NormalTok{ over_}\DecValTok{30}\OperatorTok{/}\NormalTok{participants}\OperatorTok{*}\DecValTok{100}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(percent_over_}\DecValTok{30}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 28 x 4
+##     Year participants over_30 percent_over_30
+##    <int>        <int>   <int>           <dbl>
+##  1  2012          550     110            20  
+##  2  2016          550     100            18.2
+##  3  2000          561     101            18.0
+##  4  1904           46       8            17.4
+##  5  2008          563      94            16.7
+##  6  2004          559      89            15.9
+##  7  1912          197      30            15.2
+##  8  1920          144      21            14.6
+##  9  1948          318      43            13.5
+## 10  1996          621      77            12.4
+## # ... with 18 more rows
+\end{verbatim}
+
+\section{Percentage of those over 30 earning a medal through the
+years}\label{percentage-of-those-over-30-earning-a-medal-through-the-years}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Test_Row }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(Year,Medal_value) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}
+    \DataTypeTok{participants =} \KeywordTok{n}\NormalTok{(),}
+    \DataTypeTok{over_30      =} \KeywordTok{sum}\NormalTok{(Age }\OperatorTok{>}\StringTok{ }\DecValTok{30}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
+    \DataTypeTok{percent_over_30 =}\NormalTok{ over_}\DecValTok{30}\OperatorTok{/}\NormalTok{participants}\OperatorTok{*}\DecValTok{100}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(Year))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 56 x 5
+## # Groups:   Year [28]
+##     Year Medal_value participants over_30 percent_over_30
+##    <int>       <dbl>        <int>   <int>           <dbl>
+##  1  2016           0          406      63            15.5
+##  2  2016           1          144      37            25.7
+##  3  2012           0          406      81            20.0
+##  4  2012           1          144      29            20.1
+##  5  2008           0          419      54            12.9
+##  6  2008           1          144      40            27.8
+##  7  2004           0          415      55            13.3
+##  8  2004           1          144      34            23.6
+##  9  2000           0          417      71            17.0
+## 10  2000           1          144      30            20.8
+## # ... with 46 more rows
+\end{verbatim}
+
+Again these few plots show Rowing also has age of participation
+increasing over the years, similar to Equestrian.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#plot team and Age and reflect on if earned a medal}
+\NormalTok{p1<-}\KeywordTok{ggplot}\NormalTok{(Test_Row, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Team, }\DataTypeTok{y=}\NormalTok{Age)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Medal_value))}
+
+\CommentTok{#plot to compare sex vs age}
+\NormalTok{p2<-}\KeywordTok{ggplot}\NormalTok{(Test_Row, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Sex, }\DataTypeTok{y=}\NormalTok{Age)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Medal_value))}
+
+\CommentTok{#plot over time - test set}
+\NormalTok{p3<-}\KeywordTok{ggplot}\NormalTok{(Test_Row, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Year, }\DataTypeTok{y=}\NormalTok{Age)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{shape=}\DecValTok{1}\NormalTok{) }\OperatorTok{+}\StringTok{    }\CommentTok{# Use hollow circles}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method=}\NormalTok{lm)    }\CommentTok{# Add linear regression line }
+
+ 
+\CommentTok{#Line plot over time Test set}
+\NormalTok{p4<-}\KeywordTok{ggplot}\NormalTok{(Test_Row, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Year, }\DataTypeTok{y=}\NormalTok{ Age_over_}\DecValTok{30}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{shape=}\DecValTok{1}\NormalTok{) }\OperatorTok{+}\StringTok{    }\CommentTok{# Use hollow circles}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method=}\NormalTok{lm)    }\CommentTok{# Add linear regression line }
+
+\CommentTok{#line plot over Year, Age}
+\NormalTok{p5<-}\KeywordTok{ggplot}\NormalTok{(Test_Row, }\KeywordTok{aes}\NormalTok{(Year, Age, }\DataTypeTok{group=}\NormalTok{Age_over_}\DecValTok{30}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{color=} \StringTok{"blue"}\NormalTok{)}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{() }
+
+\CommentTok{#bar chart Test set looking at year by age over 30}
+\NormalTok{p6<-}\KeywordTok{ggplot}\NormalTok{(Test_Row, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Year, }\DataTypeTok{fill =}\NormalTok{ Age_over_}\DecValTok{30}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{position =} \StringTok{"dodge"}\NormalTok{)}
+
+\CommentTok{#line chart to review mean age}
+\NormalTok{p7<-}\KeywordTok{ggplot}\NormalTok{(Test_Row, }\KeywordTok{aes}\NormalTok{(Year, Age, }\DataTypeTok{group=}\KeywordTok{mean}\NormalTok{(Age))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{color =} \StringTok{"blue"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
+
+\CommentTok{#histogram on Age & medals of test set}
+\NormalTok{p8<-}\KeywordTok{ggplot}\NormalTok{(Test_Row, }\KeywordTok{aes}\NormalTok{(Age, }\DataTypeTok{fill =} \KeywordTok{factor}\NormalTok{(Medal))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{)}
+
+\CommentTok{#bar plot on test set}
+\NormalTok{p9<-}\KeywordTok{ggplot}\NormalTok{(Test_Row, }\KeywordTok{aes}\NormalTok{ (}\DataTypeTok{x =}\NormalTok{ Year, }\DataTypeTok{fill=} \KeywordTok{factor}\NormalTok{(Age_over_}\DecValTok{30}\NormalTok{))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{facet_grid}\NormalTok{(Medal_value }\OperatorTok{~}\StringTok{ }\NormalTok{.)}
+
+\CommentTok{#plot to add color on over 30}
+\NormalTok{p10<-}\KeywordTok{ggplot}\NormalTok{(Test_Row, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Sport, }\DataTypeTok{y=}\NormalTok{Team, color }\OperatorTok{>=}\StringTok{ }\DecValTok{30}\NormalTok{(Age))) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{shape=}\DecValTok{19}\NormalTok{,      }\CommentTok{# Use solid circles}
+             \DataTypeTok{alpha=}\DecValTok{1}\OperatorTok{/}\DecValTok{4}\NormalTok{, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Age))     }\CommentTok{# 1/4 opacity}
+
+\KeywordTok{grid.arrange}\NormalTok{(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Capstone_Final_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+Then following with linear regression result which similar to the train
+set has 51\% r squared.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{age.out21 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(Age_over_}\DecValTok{30} \OperatorTok{~}\StringTok{ }\NormalTok{Medal_value }\OperatorTok{+}\StringTok{ }\NormalTok{NOC }\OperatorTok{+}\StringTok{ }\NormalTok{Age,}
+               \DataTypeTok{data=}\NormalTok{Test_Row)}
+\KeywordTok{summary}\NormalTok{(age.out21)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Age_over_30 ~ Medal_value + NOC + Age, data = Test_Row)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.19770 -0.17530 -0.04576  0.11682  0.68153 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -1.3609854  0.0788204 -17.267   <2e-16 ***
+## Medal_value  0.0043422  0.0057601   0.754    0.451    
+## NOCANG      -0.1938786  0.1899661  -1.021    0.307    
+## NOCANZ      -0.0645415  0.1096775  -0.588    0.556    
+## NOCARG       0.0382350  0.0796322   0.480    0.631    
+## NOCAUS       0.0331474  0.0783292   0.423    0.672    
+## NOCAUT       0.0428239  0.0804375   0.532    0.594    
+## NOCAZE      -0.0178562  0.1450895  -0.123    0.902    
+## NOCBAH       0.0701549  0.2572176   0.273    0.785    
+## NOCBEL       0.0198493  0.0796837   0.249    0.803    
+## NOCBER       0.0114808  0.1899670   0.060    0.952    
+## NOCBLR       0.0572447  0.0832386   0.688    0.492    
+## NOCBOH      -0.0471933  0.2572129  -0.183    0.854    
+## NOCBRA       0.0023592  0.0803382   0.029    0.977    
+## NOCBUL       0.0532693  0.0797341   0.668    0.504    
+## NOCCAN       0.0097375  0.0782722   0.124    0.901    
+## NOCCHI       0.0634532  0.0891904   0.711    0.477    
+## NOCCHN       0.0229396  0.0798106   0.287    0.774    
+## NOCCMR      -0.1645415  0.1899650  -0.866    0.386    
+## NOCCOL       0.1288290  0.2572219   0.501    0.616    
+## NOCCRO      -0.0128464  0.0855981  -0.150    0.881    
+## NOCCUB       0.0352024  0.0804591   0.438    0.662    
+## NOCCZE       0.0322927  0.0838737   0.385    0.700    
+## NOCDEN       0.0404049  0.0789320   0.512    0.609    
+## NOCECU      -0.0471933  0.2572129  -0.183    0.854    
+## NOCEGY      -0.0479096  0.0849634  -0.564    0.573    
+## NOCESA       0.1092710  0.1614509   0.677    0.499    
+## NOCESP       0.0586074  0.0803745   0.729    0.466    
+## NOCEST       0.0666860  0.0876748   0.761    0.447    
+## NOCEUN       0.0508708  0.0854122   0.596    0.551    
+## NOCFIN       0.0569510  0.0816344   0.698    0.485    
+## NOCFRA       0.0140869  0.0782900   0.180    0.857    
+## NOCFRG       0.0004905  0.0797197   0.006    0.995    
+## NOCGBR       0.0279691  0.0781298   0.358    0.720    
+## NOCGDR      -0.0060682  0.0795933  -0.076    0.939    
+## NOCGER       0.0123741  0.0783288   0.158    0.874    
+## NOCGRE      -0.0807667  0.0795430  -1.015    0.310    
+## NOCGUA      -0.0072305  0.1614550  -0.045    0.964    
+## NOCHKG       0.0481658  0.0942251   0.511    0.609    
+## NOCHON       0.1288290  0.2572219   0.501    0.616    
+## NOCHUN       0.0055385  0.0795268   0.070    0.944    
+## NOCINA       0.1288290  0.1614534   0.798    0.425    
+## NOCIND      -0.0413259  0.1096772  -0.377    0.706    
+## NOCIOA      -0.1058674  0.1899640  -0.557    0.577    
+## NOCIRI       0.0349505  0.1343311   0.260    0.795    
+## NOCIRL       0.0342420  0.0832254   0.411    0.681    
+## NOCIRQ       0.1492338  0.1614403   0.924    0.355    
+## NOCITA       0.0367538  0.0783032   0.469    0.639    
+## NOCJPN       0.0187955  0.0796795   0.236    0.814    
+## NOCKAZ       0.0408179  0.1163366   0.351    0.726    
+## NOCKEN      -0.0165862  0.1900064  -0.087    0.930    
+## NOCKOR       0.1370801  0.0834227   1.643    0.100    
+## NOCKUW      -0.2232156  0.2572151  -0.868    0.386    
+## NOCLAT      -0.0031877  0.1163324  -0.027    0.978    
+## NOCLBA      -0.1645415  0.2572131  -0.640    0.522    
+## NOCLIB       0.0114808  0.2572146   0.045    0.964    
+## NOCLTU      -0.0223823  0.0895574  -0.250    0.803    
+## NOCMEX       0.0789897  0.0829834   0.952    0.341    
+## NOCMON      -0.0350972  0.1208584  -0.290    0.772    
+## NOCMYA      -0.0471933  0.1899646  -0.248    0.804    
+## NOCNED       0.0034429  0.0783922   0.044    0.965    
+## NOCNGR       0.0114808  0.2572146   0.045    0.964    
+## NOCNIG       0.3073915  0.2572758   1.195    0.232    
+## NOCNOR       0.0398861  0.0798147   0.500    0.617    
+## NOCNZL       0.0069652  0.0790803   0.088    0.930    
+## NOCPAK      -0.1645415  0.1614395  -1.019    0.308    
+## NOCPAR       0.0466853  0.1343322   0.348    0.728    
+## NOCPER       0.0510202  0.1050066   0.486    0.627    
+## NOCPHI      -0.1352045  0.1899642  -0.712    0.477    
+## NOCPOL       0.0014142  0.0787879   0.018    0.986    
+## NOCPOR      -0.0612346  0.0864946  -0.708    0.479    
+## NOCPRK       0.2563796  0.1266558   2.024    0.043 *  
+## NOCPUR      -0.2232156  0.1899677  -1.175    0.240    
+## NOCROU       0.0309547  0.0786792   0.393    0.694    
+## NOCRSA       0.0386787  0.0831454   0.465    0.642    
+## NOCRUS       0.0475291  0.0819609   0.580    0.562    
+## NOCSAA       0.0453717  0.1208568   0.375    0.707    
+## NOCSCG      -0.0080772  0.1050103  -0.077    0.939    
+## NOCSGP      -0.2818897  0.2572184  -1.096    0.273    
+## NOCSLO       0.0763831  0.0863081   0.885    0.376    
+## NOCSRB       0.0842813  0.1031554   0.817    0.414    
+## NOCSUI       0.0002633  0.0790894   0.003    0.997    
+## NOCSVK       0.0823978  0.1343249   0.613    0.540    
+## NOCSWE       0.0141869  0.0801160   0.177    0.859    
+## NOCTCH       0.0095760  0.0791202   0.121    0.904    
+## NOCTHA       0.1303531  0.1343720   0.970    0.332    
+## NOCTOG       0.2461773  0.2572340   0.957    0.339    
+## NOCTPE       0.0114808  0.1343291   0.085    0.932    
+## NOCTTO       0.0726950  0.2573360   0.282    0.778    
+## NOCTUN       0.1728346  0.1163584   1.485    0.137    
+## NOCTUR      -0.0463466  0.1614608  -0.287    0.774    
+## NOCUAR      -0.1109818  0.1126812  -0.985    0.325    
+## NOCUKR       0.0645947  0.0822225   0.786    0.432    
+## NOCURS       0.0187941  0.0788003   0.239    0.811    
+## NOCURU       0.0230271  0.0859181   0.268    0.789    
+## NOCUSA       0.0191707  0.0780632   0.246    0.806    
+## NOCUZB       0.1092710  0.1266587   0.863    0.388    
+## NOCVAN      -0.0471933  0.2572129  -0.183    0.854    
+## NOCVEN      -0.0178562  0.1899656  -0.094    0.925    
+## NOCVIE       0.0603759  0.1266521   0.477    0.634    
+## NOCYUG       0.0444193  0.0804402   0.552    0.581    
+## NOCZIM       0.0876447  0.1208605   0.725    0.468    
+## Age          0.0586741  0.0005655 103.756   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.2452 on 10492 degrees of freedom
+## Multiple R-squared:  0.5195, Adjusted R-squared:  0.5148 
+## F-statistic: 111.2 on 102 and 10492 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+After review of these results in both the Training and Test dataset, I
+feel in Equestrianism and Rowing, there will continue to be an upward
+trend of older athletes, however it is difficult to predict if they will
+be successful in earning a medal.
+
+I hope these results can show Sports companies that focusing on all age
+groups is important. This research and predicting trends could continue
+focusing on NOC for which country teams have the highest chance of
+earning a medal over 30 to further focus your marketing. It could also
+be analysized for Sex, especially focusing on Sport to determine which
+market segment to focus product creation and market needs. While the
+percentage of athletes earning a medal or even participating in an
+Olympic event over the age of 30 will always be in the minority,
+highlighting these achievements in your marketing can modivate your
+target market to aspire to be like them and the products used to get
+them there.
+
+
+\end{document}
